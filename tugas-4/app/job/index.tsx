@@ -1,5 +1,4 @@
-import { Pressable, View, StyleSheet, Text, FlatList } from 'react-native';
-
+import { Pressable, View, Text, FlatList } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Card from '@/components/Card';
 import { useState } from 'react';
@@ -33,7 +32,7 @@ const jobs = [
 ];
 
 export default function JobScreen() {
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [selectedJobId] = useState<string | null>(null);
   const [isPressed, setIsPressed] = useState(false);
   const router = useRouter();
   return (

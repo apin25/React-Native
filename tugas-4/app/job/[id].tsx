@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 
@@ -30,7 +30,6 @@ const jobs = [
 ];
 
 export default function JobDetailScreen() {
-  const  router  =useRouter()
   const { id } = useLocalSearchParams();
   const navigation = useNavigation();
   const job = jobs.find((j) => j.id === id);
