@@ -24,9 +24,6 @@ export default {
           300: '#D1D5DB', // Abu-abu muda untuk border/garis
           100: '#F3F4F6', // Abu-abu sangat muda untuk background halaman
         },
-        // Anda bisa menambahkan warna lain sesuai kebutuhan
-        // success: '#10B981',
-        // error: '#EF4444',
       },
 
       // 2. Tipografi (Typography)
@@ -34,15 +31,12 @@ export default {
       // Font family seperti 'Poppins' atau 'Inter' akan cocok dengan desain ini.
       // Anda perlu meng-install font tersebut secara manual di project React Native Anda.
       fontFamily: {
-        // Ganti 'Poppins' dengan nama font yang Anda gunakan
         sans: ['Poppins-Regular', 'sans-serif'],
         medium: ['Poppins-Medium', 'sans-serif'],
         semibold: ['Poppins-SemiBold', 'sans-serif'],
         bold: ['Poppins-Bold', 'sans-serif'],
       },
 
-      // 3. Radius Sudut (Border Radius)
-      // Untuk membuat sudut elemen menjadi tumpul secara konsisten.
       borderRadius: {
         'sm': '4px',    // Untuk elemen kecil
         'md': '8px',    // Default untuk card, input

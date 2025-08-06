@@ -8,6 +8,8 @@ type Props = {
   secureTextEntry?: boolean;
   value?: string;
   onChangeText?: (text: string) => void;
+  iconRight?: React.ReactNode;
+  onIconRightPress?: () => void;
 };
 
 export default function Input({
@@ -16,22 +18,43 @@ export default function Input({
   secureTextEntry = false,
   value,
   onChangeText,
+  iconRight,
+  onIconRightPress,
 }: Props) {
   const [isFocused, setIsFocused] = useState(false);
   const [hidePassword, setHidePassword] = useState(secureTextEntry);
 
   const togglePassword = () => setHidePassword(!hidePassword);
 
+  const renderIconRight = () => {
+    if (secureTextEntry) {
+      return (
+        <TouchableOpacity onPress={togglePassword}>
+          {hidePassword ? (
+            <Eye size={20} color="#7E62F3" />
+          ) : (
+            <EyeOff size={20} color="#7E62F3" />
+          )}
+        </TouchableOpacity>
+      );
+    } else if (iconRight) {
+      return (
+        <TouchableOpacity onPress={onIconRightPress}>
+          {iconRight}
+        </TouchableOpacity>
+      );
+    }
+    return null;
+  };
+
   return (
     <View className="w-full mb-4">
       <Text className="text-base font-semibold mb-1">{text}</Text>
-      <View
-        className={`border rounded-lg px-5 py-3 flex-row items-center bg-white shadow-md shadow-gray-300 ${
-          isFocused ? 'border-primary' : 'border-transparent'
-        }`}
-      >
+      <View className="relative">
         <TextInput
-          className="flex-1 text-base pr-20"
+          className={`border rounded-lg px-5 pr-28 py-3 text-base bg-white shadow-md shadow-gray-300 ${
+            isFocused ? 'border-primary' : 'border-transparent'
+          }`}
           placeholder={placeholder}
           placeholderTextColor="#D1D5DB"
           secureTextEntry={hidePassword}
@@ -40,15 +63,9 @@ export default function Input({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
-        {secureTextEntry && (
-          <TouchableOpacity onPress={togglePassword}>
-            {hidePassword ? (
-              <Eye size={20} color="#6D28D9" />
-            ) : (
-              <EyeOff size={20} color="#6D28D9" />
-            )}
-          </TouchableOpacity>
-        )}
+        <View className="absolute right-4 top-1/2 -translate-y-1/2">
+          {renderIconRight()}
+        </View>
       </View>
     </View>
   );
