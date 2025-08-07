@@ -71,7 +71,7 @@ export default function Login() {
                 />
                <Text className='font-medium text-neutral-500 mb-12'>Don't have an acount? <Pressable onPress={() => router.replace('/auth/Register')}><Text className="font-bold text-primary">Sign Up</Text></Pressable></Text> 
             </View>
-            <ButtonPrimary text="Sign In" onPress={handlLogin} />
+            <ButtonPrimary text="Sign In" myWidth={360} onPress={handlLogin} />
         </View>
     </View>
     </>

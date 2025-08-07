@@ -5,14 +5,16 @@ import React from 'react';
 type Props = {
   text: string;
   onPress?: () => void;
+  myWidth:number
 };
 
-export function ButtonPrimary({ text, onPress }: Props) {
+export function ButtonPrimary({ text, onPress, myWidth }: Props) {
   const { width } = useWindowDimensions(); 
 
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <LinearGradient
+        className='shadow-md shadow-primary'
         colors={['#7E62F3', '#A38EFF']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
@@ -20,7 +22,7 @@ export function ButtonPrimary({ text, onPress }: Props) {
           paddingVertical: 12,
           paddingHorizontal: 16,
           borderRadius: 12,
-          minWidth: 320,
+          minWidth: myWidth,
           width: width * 0.8, 
           maxWidth: 480,
         }}

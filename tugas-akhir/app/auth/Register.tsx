@@ -73,7 +73,7 @@ const handleRegister = async () => {
                 />
                <Text className='font-medium text-neutral-500 mb-12'>Have an acount? <Pressable onPress={() => router.replace('/auth/Login')}><Text className="font-bold text-primary">Sign In</Text></Pressable></Text> 
             </View>
-            <ButtonPrimary text="Sign Up" onPress={handleRegister} />
+            <ButtonPrimary text="Sign Up" myWidth={360} onPress={handleRegister} />
         </View>
     </View>
     </>

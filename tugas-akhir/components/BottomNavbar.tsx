@@ -2,8 +2,10 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Home, Bell, User, Plus, BriefcaseBusiness } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 
 export default function BottomNavbar() {
+  const router = useRouter();
   return (
     <View className="bg-white border-t border-gray-200 flex-row justify-between items-center px-5 py-2 relative">
       
@@ -15,8 +17,8 @@ export default function BottomNavbar() {
         <BriefcaseBusiness size={24} color="#7E62F3" />
         <Text className="text-xs text-gray-400">Applications</Text>
     </TouchableOpacity>
-      {/* Tombol tengah besar */}
       <TouchableOpacity
+        onPress={() => router.replace('/jobs/Add/AddJob')}
         activeOpacity={0.8}
         className="w-16 h-16 rounded-full -mt-10 shadow-lg shadow-primary-light overflow-hidden"
         >

@@ -31,28 +31,26 @@ export default function ListJob() {
       >
         <View className="flex flex-row justify-between items-end">
           <Text className="font-medium mb-2 text-xl text-white ml-5">Welcome, Ayam</Text>
-               <View className={`w-10 h-10 rounded-full ${randomBg} justify-center items-center mr-5 mt-5`}>
-                    <Text className="text-white font-bold text-lg">
-                    A
-                    </Text>
-               </View>
+            <View className={`w-10 h-10 rounded-full ${randomBg} justify-center items-center mr-5 mt-5`}>
+              <Text className="text-white font-bold text-lg">
+              A
+              </Text>
+            </View>
         </View>
         <Text className="mt-1 ml-5 font-semibold text-lg text-white mr-5" numberOfLines={2}>Find a job you've always dreamed of in here</Text>
         <View className="flex flex-row items-center px-5 space-x-3 mt-1">
           <View className="flex-1">
-               <Input
-                    text=""
-                    placeholder="Search"
-                    iconRight={<Search size={20} color="#7E62F3" />}
+            <Input
+                text=""
+                placeholder="Search"
+                iconRight={<Search size={20} color="#7E62F3" />}
 
-               />
-               
+            /> 
           </View>
           <View className="px-4 py-4 bg-secondary rounded-lg mb-2">
-               <View className="text-white font-bold"><Filter size={20} color="white" /></View>
+            <View className="text-white font-bold"><Filter size={20} color="white" /></View>
           </View>
-          </View>
-
+        </View>
       </LinearGradient>
       <View className="items-center mt-6">
         <Card
