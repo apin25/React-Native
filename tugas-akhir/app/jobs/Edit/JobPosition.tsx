@@ -38,7 +38,7 @@ export default function JobPosition() {
   const handleSelect = (job: string) => {
 
     router.push({
-  pathname: '/jobs/Add/AddJob',
+  pathname: `/jobs/Edit/${params.id}`,
   params: {
     ...params, 
     selectedJob: job,
@@ -48,7 +48,7 @@ export default function JobPosition() {
   };
 
   return (
-    <View className="flex-1 bg-white px-4 pt-14 mt-5">
+    <View className="flex-1 bg-white px-4 pt-14">
       <View className="flex-row items-center mb-6">
         <Pressable onPress={() => navigation.goBack()}>
           <ArrowLeft size={24} color="#1F2937" />

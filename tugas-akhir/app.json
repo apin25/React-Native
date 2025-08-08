@@ -4,7 +4,6 @@
     "slug": "tugas-akhir",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
     "scheme": "tugasakhir",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

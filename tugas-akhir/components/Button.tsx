@@ -27,7 +27,7 @@ export function ButtonPrimary({ text, onPress, myWidth }: Props) {
           maxWidth: 480,
         }}
       >
-        <Text className="text-white text-center font-semibold">
+        <Text className="text-white text-center font-semibold text-lg">
           {text}
         </Text>
       </LinearGradient>
@@ -35,7 +35,7 @@ export function ButtonPrimary({ text, onPress, myWidth }: Props) {
   );
 }
 
-export function ButtonSecondary({ text, onPress }: Props) {
+export function ButtonSecondary({ text, onPress, myWidth }: Props) {
   const { width } = useWindowDimensions(); 
 
   return (
@@ -47,11 +47,11 @@ export function ButtonSecondary({ text, onPress }: Props) {
           paddingVertical: 12,
           paddingHorizontal: 16,
           borderRadius: 12,
-          minWidth: 320,
+          minWidth: myWidth,
           width: width * 0.8, 
           maxWidth: 480,
         }}>
-        <Text className="text-white text-center font-semibold">
+        <Text className="text-white text-center font-semibold text-lg">
           {text}
         </Text>
     </TouchableOpacity>

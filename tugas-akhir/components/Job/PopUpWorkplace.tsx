@@ -10,7 +10,7 @@ type PopUpJobProps = {
 };
 
 const OPTIONS = [
-  { label: 'On-site', desc: 'Employees come to work' },
+  { label: 'On Site', desc: 'Employees come to work' },
   { label: 'Hybrid', desc: 'Employees work directly on site or off site' },
   { label: 'Remote', desc: 'Employees working off site' },
 ];

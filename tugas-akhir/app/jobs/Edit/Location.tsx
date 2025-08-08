@@ -11,44 +11,44 @@ import { ArrowLeft, Search, X } from 'lucide-react-native';
 import Input from '@/components/Input';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
-export default function JobPosition() {
+export default function Location() {
   const navigation = useNavigation();
   const router = useRouter();
     const params = useLocalSearchParams()
 
-  const jobs = [
-    'Assistant',
-    'Associate',
-    'Administrative Assistant',
-    'Account Manager',
-    'Assistant Manager',
-    'Commission Sales Associate',
-    'Sales Attendant',
-    'Accountant',
-    'Sales Advocate',
-    'Analyst',
+  const locations = [
+    'Jakarta',
+    'Bogor',
+    'Depok',
+    'Tangerang',
+    'Bekasi',
+    'Semarang',
+    'Purwokerto',
+    'Yogyakarta',
+    'Surabaya',
+    'Malang',
   ];
 
   const [search, setSearch] = useState('');
 
-  const filteredJobs = jobs.filter((job) =>
-    job.toLowerCase().includes(search.toLowerCase())
+  const filteredLocations = locations.filter((e) =>
+    e.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleSelect = (job: string) => {
+  const handleSelect = (loc: string) => {
 
     router.push({
-  pathname: '/jobs/Add/AddJob',
+  pathname: `/jobs/Edit/${params.id}`,
   params: {
     ...params, 
-    selectedJob: job,
+    selectedLocation: loc,
   },
 });
 
   };
 
   return (
-    <View className="flex-1 bg-white px-4 pt-14 mt-5">
+    <View className="flex-1 bg-white px-4 pt-14">
       <View className="flex-row items-center mb-6">
         <Pressable onPress={() => navigation.goBack()}>
           <ArrowLeft size={24} color="#1F2937" />
@@ -56,7 +56,6 @@ export default function JobPosition() {
         <Text className="text-lg font-semibold ml-4">Job Position</Text>
       </View>
 
-      {/* Search Box */}
       <View className="mb-4">
          <Input
             value={search}
@@ -73,7 +72,7 @@ export default function JobPosition() {
       </View>
 
       <FlatList
-        data={filteredJobs}
+        data={filteredLocations}
         keyExtractor={(item) => item}
         renderItem={({ item }) => (
           <TouchableOpacity

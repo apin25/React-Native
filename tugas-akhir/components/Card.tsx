@@ -20,7 +20,6 @@ export default function Card({
   company,
   employment_type,
   description,
-  close_at,
 }: JobResponse) {
   const router = useRouter();
   const randomBg = useMemo(() => {
@@ -30,35 +29,32 @@ export default function Card({
   return (
    <Pressable
   onPress={() => router.push(`/jobs/${id}`)}
-  className="bg-white rounded-2xl px-4 py-4 mb-4 shadow-md self-center w-[92%]"
+  className="bg-white rounded-3xl px-8 py-6 mb-4 w-full shadow-md self-center h-auto"
 >
-  <View className="flex-row items-center mb-2">
-    <View className={`w-9 h-9 rounded-full ${randomBg} justify-center items-center mr-3`}>
-      <Text className="text-white font-bold text-lg">
+  <View className="flex-row items-center mb-4">
+    <View className={`w-12 h-12 rounded-full ${randomBg} justify-center items-center mr-4`}>
+      <Text className="text-white font-bold text-xl">
         {company?.charAt(0).toUpperCase()}
       </Text>
     </View>
     <View className="flex-1">
-      <Text className="text-base font-semibold text-black">{job_position}</Text>
-      <Text className="text-sm text-gray-600">{company} - {job_location}</Text>
+      <Text className="font-bold text-2xl text-black">{job_position}</Text>
+      <Text className="font-semibold text-lg text-gray-600">{company} - {job_location}</Text>
     </View>
   </View>
 
-  <Text className="text-sm text-gray-700 mb-2" numberOfLines={1}>
+  <Text className="text-md text-gray-700 mb-2" numberOfLines={2}>
     {description}
   </Text>
 
-  <View className="flex flex-row flex-wrap gap-2 justify-end">
-    <View className="px-3 py-1 bg-orange-50 rounded-md">
-      <Text className="text-sm text-orange-500">{type_of_workplace}</Text>
+  <View className="flex flex-row flex-wrap gap-2 justify-end mt-2">
+    <View className="px-5 py-2 bg-orange-50 rounded-md">
+      <Text className="text-md text-secondary">{type_of_workplace}</Text>
     </View>
-    <View className="px-3 py-1 bg-orange-50 rounded-md">
-      <Text className="text-sm text-orange-500">{employment_type}</Text>
+    <View className="px-5 py-2 bg-orange-50 rounded-md">
+      <Text className="text-md text-secondary">{employment_type}</Text>
     </View>
   </View>
-    <Text className="text-xs text-gray-400">
-    Close At: {close_at.toLocaleDateString()}
-  </Text>
 </Pressable>
   );
 }

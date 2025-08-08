@@ -25,7 +25,7 @@ export default function SplashScreen() {
 
   return (
     <View className="flex-1 justify-center items-center bg-primary">
-      <Text className="text-white font-extrabold text-3xl">KerjApin™️</Text>
+      <Text className="ml-6 text-white font-extrabold text-3xl">KerjApin™️</Text>
     </View>
   );
 }

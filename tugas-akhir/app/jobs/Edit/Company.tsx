@@ -44,9 +44,8 @@ export default function Company() {
   );
 
   const handleSelect = (com: string) => {
-
-    router.push({
-  pathname: '/jobs/Add/AddJob',
+  router.push({
+  pathname: `/jobs/Edit/${params.id}`,
   params: {
     ...params, 
     selectedCompany: com,
@@ -56,13 +55,14 @@ export default function Company() {
   };
   return (
     <View className="flex-1 bg-white px-4 pt-14">
-      <View className="flex-row items-center mb-6 mt-6">
+      <View className="flex-row items-center mb-6">
         <Pressable onPress={() => navigation.goBack()}>
           <ArrowLeft size={24} color="#1F2937" />
         </Pressable>
         <Text className="text-lg font-semibold ml-4">Job Position</Text>
       </View>
 
+      {/* Search Box */}
       <View className="mb-4">
          <Input
             value={search}

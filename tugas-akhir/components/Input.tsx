@@ -52,7 +52,7 @@ export default function Input({
       <Text className="text-base font-semibold mb-1">{text}</Text>
       <View className="relative">
         <TextInput
-          className={`border rounded-lg px-5 pr-40 py-3 text-base bg-white shadow-md shadow-gray-300 ${
+          className={`border rounded-lg px-5 pr-32 py-3 text-base bg-white shadow-md shadow-gray-300 ${
             isFocused ? 'border-primary' : 'border-transparent'
           }`}
           placeholder={placeholder}

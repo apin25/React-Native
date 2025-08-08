@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { JobRequestCreate, JobRequestUpdate, JobResponse } from '@/interface/job';
 import { getItem } from '@/utils/storage';
 
-const API_BASE_URL = 'https://jobs-backend-apin.vercel.app/api/job';
+const API_BASE_URL = 'https://jobs-backend-apin.vercel.app/api/job'; 
 
 export function useJobs() {
   const [jobs, setJobs] = useState<JobResponse[]>([]);
@@ -12,7 +12,7 @@ export function useJobs() {
   const [error, setError] = useState<string | null>(null);
   const [job, setJob] = useState<JobResponse | null>(null);
   const fetchJobs = async (
-    job_name: string | null,
+    job_position: string | null,
     company: string | null,
     type_of_workplace: string | null,
     employment_type: string | null
@@ -22,7 +22,7 @@ export function useJobs() {
     try {
       const token = await getItem("token");
       const queryParams = new URLSearchParams();
-        if (job_name) queryParams.append("job_name", job_name);
+        if (job_position) queryParams.append("job_name", job_position);
         if (company) queryParams.append("company", company);
         if (type_of_workplace) queryParams.append("type_of_workplace", type_of_workplace);
         if (employment_type) queryParams.append("employment_type", employment_type);
@@ -30,12 +30,14 @@ export function useJobs() {
       const res = await fetch(`${API_BASE_URL}/get-list-job?${queryParams.toString()}`, {
         method:"GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
       });
       if (!res.ok) throw new Error('Gagal fetch jobs');
       const data: JobResponse[] = await res.json();
       setJobs(data);
+      setLoading(false);
     } catch (err: any) {
       setError(err.message || 'Terjadi kesalahan');
     } finally {
@@ -44,6 +46,7 @@ export function useJobs() {
   };
 
   const addJob = async (body: JobRequestCreate) => {
+    setLoading(true)
     const token = await getItem("token");
     const res = await fetch(`${API_BASE_URL}/add-job`, {
       method: 'POST',
@@ -56,17 +59,18 @@ export function useJobs() {
     if (!res.ok) throw new Error('Gagal tambah job');
     const data: JobResponse = await res.json();
     setJobs([...jobs, data]);
+    setLoading(false)
   };
 
   const updateJob = async (id: string, body: JobRequestUpdate) => {
     const token = await getItem("token");
-    const res = await fetch(`${API_BASE_URL}/job/update-job/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/update-job/${id}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({id, ...body}),
+      body: JSON.stringify(body),
     });
     if (!res.ok) throw new Error('Gagal update job');
     const data: JobResponse = await res.json();
@@ -78,17 +82,19 @@ export function useJobs() {
   };
 
   const getJobDetail = async (id: string) => {
+    setLoading(true)
     const token = await getItem("token");
     const res = await fetch(`${API_BASE_URL}/get-job-detail/${id}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
     });
     const data: JobResponse = await res.json();
     if (res.ok) {
       setJob(data);
+      setLoading(false)
     } else {
       throw new Error('Gagal ambil detail job');
     }
@@ -96,11 +102,11 @@ export function useJobs() {
 
   const deleteJob = async (id: string) => {
     const token = await getItem("token");
-    const res = await fetch(`${API_BASE_URL}/delete_job`, {
+    const res = await fetch(`${API_BASE_URL}/delete-job/${id}`, {
       method: 'PUT', 
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
     });
     if (res.ok) {
@@ -113,6 +119,7 @@ export function useJobs() {
 
   return {
     jobs,
+    job,
     fetchJobs,
     addJob,
     updateJob,

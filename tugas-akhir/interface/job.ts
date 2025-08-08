@@ -6,7 +6,7 @@ export interface JobResponse {
   company: string
   employment_type: string
   description: string
-  close_at: Date
+  is_deleted:boolean
 }
 export interface JobRequestCreate {
   job_position: string
@@ -15,7 +15,6 @@ export interface JobRequestCreate {
   company: string
   employment_type: string
   description: string
-  close_at: Date
 }
 export interface JobRequestUpdate {
   job_position: string
@@ -24,5 +23,4 @@ export interface JobRequestUpdate {
   company: string
   employment_type: string
   description: string
-  close_at: Date
 }
