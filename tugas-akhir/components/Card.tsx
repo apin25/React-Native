@@ -29,7 +29,7 @@ export default function Card({
   return (
    <Pressable
   onPress={() => router.push(`/jobs/${id}`)}
-  className="bg-white rounded-3xl px-8 py-6 mb-4 w-full shadow-md self-center h-auto"
+  className="bg-white rounded-3xl px-8 py-6 mb-4 min-w-full shadow-md self-center h-auto"
 >
   <View className="flex-row items-center mb-4">
     <View className={`w-12 h-12 rounded-full ${randomBg} justify-center items-center mr-4`}>

@@ -1,12 +1,13 @@
 import Card from "@/components/Card";
-import React, { useEffect, useMemo } from "react";
-import { View, Text, FlatList, ActivityIndicator } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import Input from '@/components/Input';
 import { Filter, Search } from 'lucide-react-native';
 import BottomNavbar from "@/components/BottomNavbar";
 import { useAuth } from "@/hooks/useAuth";
 import { useJobs } from "@/hooks/useJobs";
+import PopUpFilter from "@/components/Job/PopUpFilter";
 
 const colors = [
   'bg-pink-300',
@@ -19,6 +20,8 @@ const colors = [
 ];
 export default function ListJob() {
   const { me, user } = useAuth();
+  const [searchText, setSearchText] = useState('');
+  const [isFilterVisible, setFilterVisible] = useState(false);
   const { jobs, fetchJobs, loading } = useJobs();
   const randomBg = useMemo(() => {
       const i = Math.floor(Math.random() * colors.length);
@@ -29,8 +32,23 @@ export default function ListJob() {
   }, []);
 
   useEffect(() => {
-    fetchJobs();
+    fetchJobs(null, null, null);
   }, []);
+
+
+  const handleApplyFilter = (workplace: string | null, employment: string | null) => {
+    fetchJobs(null, workplace, employment);
+  };
+
+  const handleSearch = () => {
+    const trimmed = searchText.trim();
+
+    if (!trimmed) {
+      fetchJobs(null, null, null);
+      return;
+    }
+    fetchJobs(trimmed, null, null);
+  };
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
@@ -60,15 +78,22 @@ export default function ListJob() {
         <View className="flex flex-row items-center px-6 space-x-3 mt-1">
           <View className="flex-1">
             <Input
-                text=""
-                placeholder="Search"
-                iconRight={<Search size={20} color="#7E62F3" />}
-
-            /> 
+              text={searchText}
+              onChangeText={setSearchText}
+              placeholder="Search position and company"
+              iconRight={
+                <TouchableOpacity onPress={handleSearch}>
+                  <Search size={20} color="#7E62F3" />
+                </TouchableOpacity>
+              }
+            />
           </View>
-          <View className="px-4 py-4 ml-2 mt-5 bg-secondary rounded-lg mb-2">
-            <View className="text-white font-bold"><Filter size={20} color="white" /></View>
-          </View>
+          <TouchableOpacity
+        onPress={() => setFilterVisible(true)}
+        className="px-4 py-4 ml-2 mt-5 bg-secondary rounded-lg mb-2"
+      >
+        <Filter size={20} color="white" />
+      </TouchableOpacity>
         </View>
       </LinearGradient>
       <View className="items-center mt-4 px-4 flex-1">
@@ -93,6 +118,11 @@ export default function ListJob() {
     <View className="absolute bottom-0 right-0 left-0">
         <BottomNavbar />
       </View>
+      <PopUpFilter
+        visible={isFilterVisible}
+        onClose={() => setFilterVisible(false)}
+        onApply={handleApplyFilter}
+      />
 </>
   );
 }

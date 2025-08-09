@@ -1,29 +1,36 @@
-import { Stack, useRouter, useSegments } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { getItem } from '@/utils/storage';
-import { ActivityIndicator, View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
+import { Stack, useRouter, useSegments } from 'expo-router';
+import { getItem, removeItem } from '@/utils/storage';
+import { subscribeStorageChange } from '@/utils/storageListener';
 
 export default function RootLayout() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const segments = useSegments(); 
+  const segments = useSegments();
   const router = useRouter();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = await getItem('token');
-      setIsLoggedIn(!!token);
-      setIsLoading(false);
-    };
+  const checkAuth = async () => {
+    const token = await getItem('token');
+    setIsLoggedIn(!!token);
+    setIsLoading(false);
+  };
 
+  useEffect(() => {
     checkAuth();
+
+    // Subscribe ke event perubahan storage
+    const unsubscribe = subscribeStorageChange(() => {
+      checkAuth();
+    });
+
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
     if (!isLoading) {
       const currentRootSegment = segments[0];
-
       const inAuth = currentRootSegment === 'auth';
 
       if (!isLoggedIn && !inAuth) {
@@ -43,10 +50,6 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    />
+    <Stack screenOptions={{ headerShown: false }} />
   );
 }

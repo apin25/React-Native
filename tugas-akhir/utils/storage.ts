@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { emitStorageChange } from './storageListener';
 
 export const storeItem = async (key: string, value: string) => {
   try {
@@ -21,6 +22,7 @@ export const getItem = async (key: string) => {
 export const removeItem = async (key: string) => {
   try {
     await AsyncStorage.removeItem(key);
+    emitStorageChange();
   } catch (e) {
     console.error('Error removing item', e);
   }
