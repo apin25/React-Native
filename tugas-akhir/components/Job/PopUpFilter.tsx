@@ -12,25 +12,54 @@ const typeOfWorkplaceOptions = ["On Site", "Remote", "Hybrid"];
 const employmentTypeOptions = ["Full time", "Part time", "Internship", "Contract", "Temporary", "Volunteer", "Apprenticeship"];
 
 export default function PopUpFilter({ visible, onClose, onApply }: Props) {
-  const [selectedWorkplace, setSelectedWorkplace] = useState<string[]>([]);
-  const [selectedEmployment, setSelectedEmployment] = useState<string[]>([]);
-
-  const toggleSelection = (
-    value: string,
-    setFunc: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
-    setFunc((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
-    );
-  };
+  const [selectedWorkplace, setSelectedWorkplace] = useState<string | null>(null);
+  const [selectedEmployment, setSelectedEmployment] = useState<string | null>(null);
 
   const applyFilter = () => {
-    onApply(
-      selectedWorkplace.length ? selectedWorkplace[0] : null,
-      selectedEmployment.length ? selectedEmployment[0] : null
-    );
+    onApply(selectedWorkplace, selectedEmployment);
     onClose();
   };
+
+  // Komponen RadioButton sederhana
+  const RadioButton = ({
+    label,
+    selected,
+    onPress,
+  }: {
+    label: string;
+    selected: boolean;
+    onPress: () => void;
+  }) => (
+    <TouchableOpacity
+      onPress={onPress}
+      style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}
+      activeOpacity={0.7}
+    >
+      <View
+        style={{
+          height: 20,
+          width: 20,
+          borderRadius: 10,
+          borderWidth: 2,
+          borderColor: selected ? "#4F46E5" : "#999",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {selected ? (
+          <View
+            style={{
+              height: 10,
+              width: 10,
+              borderRadius: 5,
+              backgroundColor: "#4F46E5",
+            }}
+          />
+        ) : null}
+      </View>
+      <Text style={{ marginLeft: 12, fontSize: 16 }}>{label}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <Modal
@@ -45,35 +74,22 @@ export default function PopUpFilter({ visible, onClose, onApply }: Props) {
         <ScrollView>
           <Text className="text-lg font-semibold mb-2">Type of Workplace</Text>
           {typeOfWorkplaceOptions.map((option) => (
-            <TouchableOpacity
+            <RadioButton
               key={option}
-              className="flex-row items-center mb-2"
-              onPress={() => toggleSelection(option, setSelectedWorkplace)}
-            >
-              <View
-                className={`w-5 h-5 mr-3 border rounded ${
-                  selectedWorkplace.includes(option) ? "bg-primary" : "bg-white"
-                }`}
-              />
-              <Text>{option}</Text>
-            </TouchableOpacity>
+              label={option}
+              selected={selectedWorkplace === option}
+              onPress={() => setSelectedWorkplace(option)}
+            />
           ))}
 
-          {/* Employment Type */}
           <Text className="text-lg font-semibold mt-4 mb-2">Employment Type</Text>
           {employmentTypeOptions.map((option) => (
-            <TouchableOpacity
+            <RadioButton
               key={option}
-              className="flex-row items-center mb-2"
-              onPress={() => toggleSelection(option, setSelectedEmployment)}
-            >
-              <View
-                className={`w-5 h-5 mr-3 border rounded ${
-                  selectedEmployment.includes(option) ? "bg-primary" : "bg-white"
-                }`}
-              />
-              <Text>{option}</Text>
-            </TouchableOpacity>
+              label={option}
+              selected={selectedEmployment === option}
+              onPress={() => setSelectedEmployment(option)}
+            />
           ))}
         </ScrollView>
         <TouchableOpacity

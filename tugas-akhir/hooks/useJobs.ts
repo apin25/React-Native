@@ -24,6 +24,7 @@ export function useJobs() {
     type_of_workplace: string | null,
     employment_type: string | null
   ) => {
+    setLoading(true);
     setError(null);
     try {
       const token = await getItem("token");

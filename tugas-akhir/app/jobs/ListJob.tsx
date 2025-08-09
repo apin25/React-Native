@@ -8,6 +8,7 @@ import BottomNavbar from "@/components/BottomNavbar";
 import { useAuth } from "@/hooks/useAuth";
 import { useJobs } from "@/hooks/useJobs";
 import PopUpFilter from "@/components/Job/PopUpFilter";
+import { useLocalSearchParams } from "expo-router";
 
 const colors = [
   'bg-pink-300',
@@ -23,6 +24,7 @@ export default function ListJob() {
   const [searchText, setSearchText] = useState('');
   const [isFilterVisible, setFilterVisible] = useState(false);
   const { jobs, fetchJobs, loading } = useJobs();
+  const params = useLocalSearchParams();
   const randomBg = useMemo(() => {
       const i = Math.floor(Math.random() * colors.length);
       return colors[i];
@@ -49,14 +51,7 @@ export default function ListJob() {
     }
     fetchJobs(trimmed, null, null);
   };
-  if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center bg-white">
-        <ActivityIndicator size="large" color="#7E62F3" />
-        <Text className="mt-2 text-gray-500">Loading List Job...</Text>
-      </View>
-    );
-  }
+  
   return (
      <>
       <LinearGradient
@@ -80,7 +75,7 @@ export default function ListJob() {
             <Input
               text={searchText}
               onChangeText={setSearchText}
-              placeholder="Search position and company"
+              placeholder="Search position or company"
               iconRight={
                 <TouchableOpacity onPress={handleSearch}>
                   <Search size={20} color="#7E62F3" />
@@ -97,6 +92,12 @@ export default function ListJob() {
         </View>
       </LinearGradient>
       <View className="items-center mt-4 px-4 flex-1">
+        {loading &&  (
+        <View className="items-center py-3">
+          <ActivityIndicator size="small" color="#7E62F3" />
+          <Text className="text-gray-500 mt-1">Loading...</Text>
+        </View>
+      )}
         <FlatList
         data={jobs}
         keyExtractor={(item) => item.id}
