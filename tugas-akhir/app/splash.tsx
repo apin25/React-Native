@@ -1,4 +1,3 @@
-// app/splash.tsx
 import { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useRouter } from 'expo-router';

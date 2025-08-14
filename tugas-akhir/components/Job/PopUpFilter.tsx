@@ -20,7 +20,6 @@ export default function PopUpFilter({ visible, onClose, onApply }: Props) {
     onClose();
   };
 
-  // Komponen RadioButton sederhana
   const RadioButton = ({
     label,
     selected,

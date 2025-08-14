@@ -8,7 +8,6 @@ import BottomNavbar from "@/components/BottomNavbar";
 import { useAuth } from "@/hooks/useAuth";
 import { useJobs } from "@/hooks/useJobs";
 import PopUpFilter from "@/components/Job/PopUpFilter";
-import { useLocalSearchParams } from "expo-router";
 import Modal from 'react-native-modal';
 
 const colors = [

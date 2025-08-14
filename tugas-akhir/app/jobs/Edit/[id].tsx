@@ -16,7 +16,6 @@ export default function EditJob() {
   const [description, setDescription] = useState('');
   const [isWorkplacePopupVisible, setWorkplacePopupVisible] = useState(false);
   const [isTypePopupVisible, setTypePopupVisible] = useState(false);
-
   const params = useLocalSearchParams();
   const selectedJob = params.selectedJob as string;
   const selectedLocation = params.selectedLocation as string;

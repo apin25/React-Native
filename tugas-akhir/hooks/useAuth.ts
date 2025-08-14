@@ -1,4 +1,3 @@
-// hooks/useAuth.ts
 import { useState } from 'react';
 import { storeItem, getItem, removeItem } from '@/utils/storage';
 import { LoginRequest, LoginResponse, RegisterRequest } from '@/interface/auth';

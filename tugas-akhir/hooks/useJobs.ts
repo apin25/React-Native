@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { JobRequestCreate, JobRequestUpdate, JobResponse } from '@/interface/job';
 import { getItem, removeItem } from '@/utils/storage';
 import { useRouter } from 'expo-router';

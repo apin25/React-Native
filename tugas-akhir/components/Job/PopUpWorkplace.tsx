@@ -20,7 +20,6 @@ export default function PopUpWorkplace({ visible, onClose, selected, onSelect }:
   const params = useLocalSearchParams();
   const pathName = usePathname();
    const handleSelect = (value: string) => {
-    // Update URL param
     router.replace({
       pathname: pathName,
       params: {
