@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { storeItem, getItem, removeItem } from '@/utils/storage';
 import { LoginRequest, LoginResponse, RegisterRequest } from '@/interface/auth';
+import { useRouter } from 'expo-router';
 
 const API_BASE_URL = 'https://jobs-backend-apin.vercel.app/api/users'; 
 
@@ -8,7 +9,7 @@ export function useAuth() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<LoginResponse['user'] | null>(null);
   const [token, setToken] = useState<string | null>(null);
-
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
 const login = async (body: LoginRequest): Promise<boolean> => {
@@ -76,10 +77,10 @@ const login = async (body: LoginRequest): Promise<boolean> => {
   } catch (err) {
     console.error('LOGOUT ERROR:', err);
   } finally {
-    // Hapus data di local
     await removeItem('token');
     setUser(null);
     setToken(null);
+    router.replace("/auth/Login");
   }
 };
 
@@ -103,6 +104,7 @@ const login = async (body: LoginRequest): Promise<boolean> => {
       await removeItem('token');
       setUser(null);
       setToken(null);
+      router.replace("/auth/Login");
     }
   };
   
