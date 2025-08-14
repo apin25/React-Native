@@ -72,31 +72,27 @@ export default function ListJob() {
               {user?.username?.charAt(0).toUpperCase()}
             </Text>
           </Pressable>
-
           <Modal
             isVisible={isMenuVisible}
             onBackdropPress={() => setMenuVisible(false)}
             backdropOpacity={0.3}
             animationIn="fadeIn"
             animationOut="fadeOut"
-            style={{
-              justifyContent: 'flex-start',
-              alignItems: 'flex-end',
-              marginTop: 70,
-              marginRight: 15,
-            }}
+            style={{ margin: 0 }} 
+            className="justify-start items-end"
           >
-            <View style={{ backgroundColor: 'white', borderRadius: 8, padding: 10 }}>
+            <View className="absolute top-10 right-5 bg-white rounded-lg p-2">
               <TouchableOpacity
                 onPress={() => {
-                  setMenuVisible(false);
-                  logout();
+                  setMenuVisible(false)
+                  logout()
                 }}
               >
-                <Text style={{ fontSize: 16, padding: 8 }}>Logout</Text>
+                <Text className="text-base p-2">Logout</Text>
               </TouchableOpacity>
             </View>
           </Modal>
+
         </View>
         <Text className="mt-1 ml-5 font-semibold text-lg text-white mr-5" numberOfLines={2}>Find a job you've always dreamed of in here</Text>
         <View className="flex flex-row items-center px-6 space-x-3 mt-1">
