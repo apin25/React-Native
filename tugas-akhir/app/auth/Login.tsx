@@ -28,6 +28,18 @@ export default function Login() {
         type: 'error',
         text1: 'Username and password must be filled',
         text2: 'Something wrong when login',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
       });
       return;
     }
@@ -38,6 +50,18 @@ export default function Login() {
         type: 'success',
         text1: 'Login Success',
         text2: 'Welcome Back',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
       });
       router.replace('/jobs/ListJob');
     } else {
@@ -45,6 +69,18 @@ export default function Login() {
         type: 'error',
         text1: 'Login failed',
         text2: 'Username or password incorrect',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
       });
     }
   };

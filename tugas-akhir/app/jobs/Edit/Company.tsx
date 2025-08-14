@@ -62,7 +62,6 @@ export default function Company() {
         <Text className="text-lg font-semibold ml-4">Job Position</Text>
       </View>
 
-      {/* Search Box */}
       <View className="mb-4">
          <Input
             value={search}

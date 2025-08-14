@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Pressable, TextInput, ActivityIndicator } from 'react-native';
 import { Plus, Edit, ArrowLeft } from 'lucide-react-native';
 import { ButtonPrimary } from '@/components/Button';
@@ -7,62 +7,121 @@ import PopUpWorkplace from '@/components/Job/PopUpWorkplace';
 import PopUpType from '@/components/Job/PopUpType';
 import { useJobs } from '@/hooks/useJobs';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddJob() {
   const router = useRouter();
+  const DRAFT_DESCRIPTION_KEY = 'addjob-draft-description';
+
   const [showDescriptionInput, setShowDescriptionInput] = useState(false);
   const [description, setDescription] = useState('');
   const [isWorkplacePopupVisible, setWorkplacePopupVisible] = useState(false);
   const [isTypePopupVisible, setTypePopupVisible] = useState(false);
+
   const params = useLocalSearchParams();
   const selectedJob = params.selectedJob as string;
   const selectedLocation = params.selectedLocation as string;
   const selectedCompany = params.selectedCompany as string;
   const selectedWorkplace = params.selectedWorkplace as string;
   const selectedType = params.selectedType as string;
+
   const { addJob, loading } = useJobs();
+  useEffect(() => {
+    const loadDraft = async () => {
+      const savedDescription = await AsyncStorage.getItem(DRAFT_DESCRIPTION_KEY);
+      if (savedDescription) {
+        setDescription(savedDescription);
+        setShowDescriptionInput(true);
+      }
+    };
+    loadDraft();
+  }, []);
+  useEffect(() => {
+    AsyncStorage.setItem(DRAFT_DESCRIPTION_KEY, description);
+  }, [description]);
+
 
   const handleSubmit = async () => {
-  if (
-    !selectedJob ||
-    !selectedWorkplace ||
-    !selectedLocation ||
-    !selectedCompany ||
-    !selectedType ||
-    !description
-  ) {
-    Toast.show({
-      type: 'error',
-      text1: 'All field must be filled',
-      text2: 'Something wrong when add job',
-    });
-    return;
-  }
+    if (
+      !selectedJob ||
+      !selectedWorkplace ||
+      !selectedLocation ||
+      !selectedCompany ||
+      !selectedType ||
+      !description
+    ) {
+      Toast.show({
+        type: 'error',
+        text1: 'All field must be filled',
+        text2: 'Something wrong when add job',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
+      });
+      return;
+    }
 
-  try {
-    await addJob({
-      job_position: selectedJob,
-      type_of_workplace: selectedWorkplace,
-      job_location: selectedLocation,
-      company: selectedCompany,
-      employment_type: selectedType,
-      description,
-    });
-    Toast.show({
-      type: 'success',
-      text1: 'Add job successfully',
-      text2: 'Redirecting to list job',
-    });
-    router.replace("/jobs/ListJob");
-  } catch (error) {
-    Toast.show({
-      type: 'error',
-      text1: 'Add job failed',
-      text2: 'Something wrong when add job',
-    });
-    console.error(error);
-  }
-};
+    try {
+      await addJob({
+        job_position: selectedJob,
+        type_of_workplace: selectedWorkplace,
+        job_location: selectedLocation,
+        company: selectedCompany,
+        employment_type: selectedType,
+        description,
+      });
+
+      await AsyncStorage.removeItem(DRAFT_DESCRIPTION_KEY);
+
+      Toast.show({
+        type: 'success',
+        text1: 'Add job successfully',
+        text2: 'Redirecting to list job',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
+      });
+
+      router.replace("/jobs/ListJob");
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Add job failed',
+        text2: 'Something wrong when add job',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
+      });
+      console.error(error);
+    }
+  };
   if (loading) {
       return (
         <View className="flex-1 justify-center items-center bg-white">
@@ -73,8 +132,14 @@ export default function AddJob() {
     }
   return (
     <ScrollView className='bg-neutral-100 w-screen h-screen pb-24'>
-      <Pressable className="ml-5 mt-20" onPress={() => router.replace("/jobs/ListJob")}>
-          <ArrowLeft size={24} color="#1F2937" />
+      <Pressable
+        className="ml-5 mt-20"
+        onPress={async () => {
+          await AsyncStorage.removeItem('addjob-draft-description');
+          router.replace("/jobs/ListJob");
+        }}
+      >
+        <ArrowLeft size={24} color="#1F2937" />
       </Pressable>
       <Text className='font-bold text-2xl ml-5 mt-5'>Add a Job</Text>
       <View className='justify-center items-center mt-5'>
@@ -200,18 +265,19 @@ export default function AddJob() {
             )}
           </Pressable>
         </View>
-      {showDescriptionInput && (
-        <View className="px-4 pb-4">
-          <TextInput
-            className="min-h-24 rounded-lg bg-white p-3 text-gray-800 border border-gray-300"
-            placeholder="Enter job description..."
-            multiline
-            value={description}
-            onChangeText={setDescription}
-          />
-        </View>
-      )}
-    </View>
+
+        {showDescriptionInput && (
+          <View className="px-4 pb-4">
+            <TextInput
+              className="min-h-24 rounded-lg bg-white p-3 text-gray-800 border border-gray-300"
+              placeholder="Enter job description..."
+              multiline
+              value={description}
+              onChangeText={setDescription}
+            />
+          </View>
+        )}
+      </View>
 
       </View>
       <View className='justify-center items-center mt-16'>
@@ -222,8 +288,8 @@ export default function AddJob() {
         onClose={() => setWorkplacePopupVisible(false)}
         selected={selectedWorkplace}
         onSelect={(value) => {
-        router.setParams({ Type: value });
-        setWorkplacePopupVisible(false);
+          router.setParams({ selectedWorkplace: value });
+          setWorkplacePopupVisible(false);
       }}
     />
     <PopUpType
@@ -231,9 +297,9 @@ export default function AddJob() {
         onClose={() => setTypePopupVisible(false)}
         selected={selectedType}
         onSelect={(value) => {
-        router.setParams({ Type: value });
-        setTypePopupVisible(false);
-      }}
+          router.setParams({ selectedType: value });
+          setTypePopupVisible(false);
+        }}
     />
     </ScrollView>    
   )

@@ -28,6 +28,18 @@ export default function Register() {
         type: 'error',
         text1: 'Username and password must be filled',
         text2: 'Something wrong when register',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
       });
       return;
     }
@@ -39,6 +51,18 @@ export default function Register() {
         type: 'success',
         text1: 'Register Success',
         text2: 'Please login first',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
       });
       router.replace('/auth/Login');
     } else {
@@ -46,6 +70,18 @@ export default function Register() {
         type: 'error',
         text1: 'Register failed',
         text2: 'Something wrong when register',
+        position: 'bottom',
+        props: {}, 
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 100,
+        onShow: () => {},
+        onHide: () => {},
+        onPress: () => {},
+        style: {
+          alignSelf: 'flex-end',
+          marginRight: 20,
+        },
       });
     }
   };

@@ -1,6 +1,6 @@
 import Card from "@/components/Card";
 import React, { useEffect, useMemo, useState } from "react";
-import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import Input from '@/components/Input';
 import { Filter, Search } from 'lucide-react-native';
@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useJobs } from "@/hooks/useJobs";
 import PopUpFilter from "@/components/Job/PopUpFilter";
 import { useLocalSearchParams } from "expo-router";
+import Modal from 'react-native-modal';
 
 const colors = [
   'bg-pink-300',
@@ -20,11 +21,11 @@ const colors = [
   'bg-emerald-300',
 ];
 export default function ListJob() {
-  const { me, user } = useAuth();
+  const { me, user, logout } = useAuth();  
+  const [isMenuVisible, setMenuVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [isFilterVisible, setFilterVisible] = useState(false);
   const { jobs, fetchJobs, loading } = useJobs();
-  const params = useLocalSearchParams();
   const randomBg = useMemo(() => {
       const i = Math.floor(Math.random() * colors.length);
       return colors[i];
@@ -63,11 +64,39 @@ export default function ListJob() {
       >
         <View className="flex flex-row justify-between items-end mt-4">
           <Text className="font-bold mb-2 text-2xl text-white ml-5">Welcome, {user?.username}</Text>
-            <View className={`w-10 h-10 rounded-full ${randomBg} justify-center items-center mr-5 mt-5`}>
-              <Text className="text-white font-bold text-lg">
-              {user?.username.charAt(0).toUpperCase()}
-              </Text>
+            <Pressable
+            onPress={() => setMenuVisible(true)}
+            className={`w-10 h-10 rounded-full ${randomBg} justify-center items-center mr-5 mt-5`}
+          >
+            <Text className="text-white font-bold text-lg">
+              {user?.username?.charAt(0).toUpperCase()}
+            </Text>
+          </Pressable>
+
+          <Modal
+            isVisible={isMenuVisible}
+            onBackdropPress={() => setMenuVisible(false)}
+            backdropOpacity={0.3}
+            animationIn="fadeIn"
+            animationOut="fadeOut"
+            style={{
+              justifyContent: 'flex-start',
+              alignItems: 'flex-end',
+              marginTop: 70,
+              marginRight: 15,
+            }}
+          >
+            <View style={{ backgroundColor: 'white', borderRadius: 8, padding: 10 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  setMenuVisible(false);
+                  logout();
+                }}
+              >
+                <Text style={{ fontSize: 16, padding: 8 }}>Logout</Text>
+              </TouchableOpacity>
             </View>
+          </Modal>
         </View>
         <Text className="mt-1 ml-5 font-semibold text-lg text-white mr-5" numberOfLines={2}>Find a job you've always dreamed of in here</Text>
         <View className="flex flex-row items-center px-6 space-x-3 mt-1">

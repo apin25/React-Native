@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { JobRequestCreate, JobRequestUpdate, JobResponse } from '@/interface/job';
 import { getItem, removeItem } from '@/utils/storage';
-import { useNavigation } from 'expo-router';
+import { useRouter } from 'expo-router';
 
 const API_BASE_URL = 'https://jobs-backend-apin.vercel.app/api/job'; 
 
 export function useJobs() {
-  const navigation = useNavigation();
+  const router = useRouter();
+
   const [jobs, setJobs] = useState<JobResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +15,7 @@ export function useJobs() {
   const handleUnauthorized = async (status: number) => {
   if (status === 401) {
     await removeItem("token");
-    
+    router.replace("/auth/Login");
     return true;
   }
   return false;

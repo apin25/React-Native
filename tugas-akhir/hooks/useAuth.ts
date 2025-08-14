@@ -61,8 +61,29 @@ const login = async (body: LoginRequest): Promise<boolean> => {
   };
 
   const logout = async () => {
+  try {
+    const token = await getItem('token');
+
+    if (token) {
+      await fetch(`${API_BASE_URL}/logout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`,
+        },
+      });
+    }
+
+  } catch (err) {
+    console.error('LOGOUT ERROR:', err);
+  } finally {
+    // Hapus data di local
     await removeItem('token');
-  };
+    setUser(null);
+    setToken(null);
+  }
+};
+
 
   const me = async () => {
     const token = await getItem('token');
@@ -85,5 +106,6 @@ const login = async (body: LoginRequest): Promise<boolean> => {
       setToken(null);
     }
   };
+  
   return { user, token, login, register, logout, me, loading, error };
 }

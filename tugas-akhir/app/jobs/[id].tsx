@@ -27,8 +27,8 @@ export default function DetailJob() {
       const i = Math.floor(Math.random() * colors.length);
       return colors[i];
     }, []);
-      const latitude = -6.200000;
-  const longitude = 106.816666;
+    const latitude = -6.200000;
+    const longitude = 106.816666;
 
   const openInGoogleMaps = () => {
     const url = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
@@ -57,13 +57,37 @@ const handleDelete = (id: string) => {
               type: 'success',
               text1: 'Delete job successfully',
               text2: 'Redirecting to list job',
-            });
+              position: 'bottom',
+            props: {}, 
+            visibilityTime: 4000,
+            autoHide: true,
+            bottomOffset: 100,
+            onShow: () => {},
+            onHide: () => {},
+            onPress: () => {},
+            style: {
+              alignSelf: 'flex-end',
+              marginRight: 20,
+            },
+                });
             router.replace("/jobs/ListJob");
           } catch (error) {
             Toast.show({
               type: 'error',
               text1: 'Delete job failed',
               text2: 'Something wrong when delete job',
+              position: 'bottom',
+              props: {}, 
+              visibilityTime: 4000,
+              autoHide: true,
+              bottomOffset: 100,
+              onShow: () => {},
+              onHide: () => {},
+              onPress: () => {},
+              style: {
+                alignSelf: 'flex-end',
+                marginRight: 20,
+              },
             });
             console.error(error);
           }
@@ -154,7 +178,19 @@ const handleDelete = (id: string) => {
       </Pressable>
 
       <View className='mb-3'>
-          <ButtonSecondary text='Update Job' myWidth={300} onPress={() => router.replace(`/jobs/Edit/${job?.id}`)}/>
+          <ButtonSecondary
+            text="Update Job"
+            myWidth={300}
+            onPress={() =>
+              router.replace({
+                pathname: `/jobs/Edit/${job?.id}`,
+                params: { 
+                  fromDetail: 'true',
+                  description: job?.description || ''
+                }
+              })
+            }
+          />
       </View>
     </View>
     </>
