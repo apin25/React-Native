@@ -1,10 +1,9 @@
-import { ActivityIndicator, Alert, Linking, Pressable,  ScrollView,  Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Pressable,  ScrollView,  Text, View } from 'react-native'
 import React, { useEffect, useMemo } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { useJobs } from '@/hooks/useJobs';
 import { ArrowLeft, Trash } from 'lucide-react-native';
-import MapView, { Marker } from 'react-native-maps';
 import { ButtonSecondary } from '@/components/Button';
 import Toast from 'react-native-toast-message';
 
@@ -27,13 +26,7 @@ export default function DetailJob() {
       const i = Math.floor(Math.random() * colors.length);
       return colors[i];
     }, []);
-    const latitude = -6.200000;
-    const longitude = 106.816666;
 
-  const openInGoogleMaps = () => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
-    Linking.openURL(url);
-  };
     useEffect(() => {
       getJobDetail(params?.id);
     }, []);
@@ -146,27 +139,6 @@ const handleDelete = (id: string) => {
       <Text className='text-base font-medium'>{job?.description}</Text>
       <Text className='text-xl font-bold mt-4'>Location</Text>
       <Text className='text-base font-medium'>{job?.job_location}</Text>
-      <View className="mt-4 mx-auto mr-8 border-primary border h-60 overflow-hidden w-[96%] rounded-lg">
-        <MapView
-          style={{ flex: 1 }}
-          initialRegion={{
-            latitude,
-            longitude,
-            latitudeDelta: 0.05,
-            longitudeDelta: 0.05,
-          }}
-        >
-          <Marker
-            coordinate={{ latitude, longitude }}
-            title={job?.company}
-            description={job?.job_location}
-            onPress={openInGoogleMaps} 
-          />
-        </MapView>
-        <TouchableOpacity className='w-full h-full absolute'
-          onPress={openInGoogleMaps}
-        />
-      </View>
     </View>
     </ScrollView>
     <View className='flex flex-row absolute bottom-0 bg-white shadow-gray-100 shadow-md h-28 w-full rounded-t-3xl p-3 right-0 left-0 items-center'>
