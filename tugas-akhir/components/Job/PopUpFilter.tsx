@@ -97,6 +97,17 @@ export default function PopUpFilter({ visible, onClose, onApply }: Props) {
         >
           <Text className="text-white font-bold">Apply</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setSelectedWorkplace(null);
+            setSelectedEmployment(null);
+            onApply(null, null);
+            onClose();
+          }}
+          className="mt-3 bg-secondary p-3 rounded-lg items-center"
+        >
+          <Text className="text-white font-bold">Clear Filter</Text>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
