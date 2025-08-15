@@ -92,21 +92,21 @@ export default function PopUpFilter({ visible, onClose, onApply }: Props) {
           ))}
         </ScrollView>
         <TouchableOpacity
-          onPress={applyFilter}
-          className="mt-5 bg-primary p-3 rounded-lg items-center"
-        >
-          <Text className="text-white font-bold">Apply</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={() => {
             setSelectedWorkplace(null);
             setSelectedEmployment(null);
             onApply(null, null);
             onClose();
           }}
+          className="mt-3 bg-white border-2 border-secondary p-2 rounded-lg items-center"
+        >
+          <Text className="text-secondary font-bold">Clear Filter</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={applyFilter}
           className="mt-3 bg-secondary p-3 rounded-lg items-center"
         >
-          <Text className="text-white font-bold">Clear Filter</Text>
+          <Text className="text-white font-bold">Apply</Text>
         </TouchableOpacity>
       </View>
     </Modal>
