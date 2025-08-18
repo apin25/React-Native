@@ -19,8 +19,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     checkAuth();
-
-    // Subscribe ke event perubahan storage
     const unsubscribe = subscribeStorageChange(() => {
       checkAuth();
     });
