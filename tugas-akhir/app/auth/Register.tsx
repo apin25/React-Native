@@ -90,6 +90,7 @@ export default function Register() {
     <SafeAreaView className="flex-1 bg-neutral-50">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
         className="flex-1"
       >
         <ScrollView

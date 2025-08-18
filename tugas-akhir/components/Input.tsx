@@ -10,6 +10,7 @@ type Props = {
   onChangeText?: (text: string) => void;
   iconRight?: React.ReactNode;
   onIconRightPress?: () => void;
+  onPress?: () => void;
 };
 
 export default function Input({
@@ -20,6 +21,7 @@ export default function Input({
   onChangeText,
   iconRight,
   onIconRightPress,
+  onPress,
 }: Props) {
   const [isFocused, setIsFocused] = useState(false);
   const [hidePassword, setHidePassword] = useState(secureTextEntry);
@@ -49,7 +51,9 @@ export default function Input({
 
   return (
     <View className="w-full mb-4">
-      <Text className="text-base font-semibold mb-1">{text}</Text>
+      {text ? (
+    <Text className="text-base font-semibold mb-1">{text}</Text>
+  ) : null}
       <View className="relative">
         <TextInput
           className={`border rounded-lg px-5 pr-32 py-3 text-base bg-white shadow-md shadow-gray-300 ${
