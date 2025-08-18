@@ -97,7 +97,7 @@ export default function ListJob() {
         <View className="flex flex-row items-center px-6 space-x-3 mt-1">
           <View className="flex-1">
             <Input
-              text={searchText}
+              value={searchText}
               onChangeText={setSearchText}
               placeholder="Search position or company"
               iconRight={
