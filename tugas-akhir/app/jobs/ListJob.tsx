@@ -95,7 +95,7 @@ export default function ListJob() {
         </View>
         <Text className="mt-1 ml-5 font-semibold text-lg text-white mr-5" numberOfLines={2}>Find a job you've always dreamed of in here</Text>
         <View className="flex flex-row items-center px-6 space-x-3 mt-1">
-          <View className="flex-1">
+          <View className="flex-1 mt-6">
             <Input
               value={searchText}
               onChangeText={setSearchText}
